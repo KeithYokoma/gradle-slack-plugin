@@ -21,6 +21,7 @@ class SlackMessageTransformer {
     private static final String BRANCH_TITLE = 'Git Branch'
     private static final String AUTHOR_TITLE = 'Git Author'
     private static final String COMMIT_TITLE = 'Git Commit'
+    private static final String CHANGED_FILES = "Changed Files List"
 
     static SlackMessage buildSlackMessage(String title, Task task, TaskState state, String taskLog) {
         Throwable failure = state.getFailure()
@@ -73,6 +74,12 @@ class SlackMessageTransformer {
         commitField.setValue(GitUtils.lastCommitMessage())
         commitField.setShorten(true)
         attachments.addFields(commitField)
+
+        SlackField filesField = new SlackField()
+        filesField.setTitle(CHANGED_FILES)
+        filesField.setValue(GitUtils.lastChangedFiles())
+        filesField.setShorten(true)
+        attachments.addFields(filesField)
 
         slackMessage.addAttachments(attachments)
 
