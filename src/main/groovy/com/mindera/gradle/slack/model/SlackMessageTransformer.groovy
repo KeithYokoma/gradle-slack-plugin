@@ -38,7 +38,7 @@ class SlackMessageTransformer {
             message.append('\n')
             message.append(failure.getCause())
         }
-        if (taskLog != null) {
+        if (!success && taskLog != null) {
             message.append('\n')
             message.append(taskLog)
         }
